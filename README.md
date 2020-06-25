@@ -13,7 +13,7 @@ First you have to create a database in Notion with at least the following column
 * **Date** of type Date
 * **Location** of type Text
 
-Next find path to your Kindle 'My Clippins.txt' file (you can put it into the app folder below)
+Next find path to your Kindle 'My Clippings.txt' file (you can put it into the app folder below)
 
 Then follow these steps for pipenv:
 1. Download/clone this python app
