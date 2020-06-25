@@ -25,7 +25,7 @@ import parser
 import progress
 
 appname = "Notion Clippings"
-version = "1.0.0"
+version = "1.0.1"
 
 #Configuration load
 config = configparser.ConfigParser()
@@ -107,7 +107,7 @@ def clipExists(clips, row):
 
 
 #Development only: used to trim clippings size to a reasonable level for testing
-clips = clips[:90]
+# clips = clips[:90]
 
 #Iterate Notion collection (rows)
 print(f"Comparing items")
