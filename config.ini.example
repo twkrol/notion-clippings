@@ -1,0 +1,17 @@
+[notion]
+#token to be found in your browser cookies name "token_v2"
+api_token = 
+# make sure you link to collection view with no filters set
+collection_url = 
+# status given to newly added items in column Status
+new_status = New
+
+[kindle]
+# path to Kindle clippings file; could be ex. D:\documents\My Clippings.txt
+clippings_file = ./My Clippings.txt
+
+[runtime]
+# possible logging levels: NOTSET, INFO, DEBUG, WARNING, ERROR, CRITICAL
+logging = NOTSET
+# enter file name if you want to create logfile
+logfile =

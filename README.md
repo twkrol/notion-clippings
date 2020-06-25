@@ -1,2 +1,2 @@
 # notion-clippings
-Import Kindle clippings to a Notion's collection
+Import Kindle clippings into a Notion's collection
