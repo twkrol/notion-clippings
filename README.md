@@ -1,14 +1,14 @@
 # notion-clippings
-Import Kindle clippings into a Notion's collection
+Import Kindle clippings into a Notion's database.
 
 # When would you like to use this tool
 In case you would like to import your Kindle highlights collection into Notion for further use.
 
 # Getting started
-First you have to create a database in Notion with at least the following columns:
-* **Title** of type Title (you can rename the initial column Name)
+First you have to create a database in Notion with at least the following columns (order is not important):
 * **Status** of type Select
 * **Text** of type Text
+* **Title** of type Title (you can rename the initial column Name)
 * **Authors** of type Text
 * **Date** of type Date
 * **Location** of type Text
