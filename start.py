@@ -21,11 +21,11 @@ import configparser
 import logging
 from notion.client import NotionClient
 # from clippings import parser
-import parser
+import kindle
 import progress
 
 appname = "Notion Clippings"
-version = "1.0.1"
+version = "1.0.2"
 
 #Configuration load
 config = configparser.ConfigParser()
@@ -52,7 +52,7 @@ clippings_file = config.get('kindle', 'clippings_file')
 print(f"- loading clippings from {clippings_file}...", end='')
 try:
     with open(clippings_file, 'r', encoding='utf-8-sig') as infile:
-        clips = parser.parse_clippings(infile)
+        clips = kindle.parse_clippings(infile)
         print(f"[{len(clips)} loaded]")
 except FileNotFoundError:
     print(f"File {clippings_file} not found! Exiting.")
