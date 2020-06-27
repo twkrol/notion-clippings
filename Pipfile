@@ -6,6 +6,7 @@ name = "pypi"
 [packages]
 clippings = "*"
 notion = "*"
+progress = "*"
 
 [requires]
 python_version = "3.7"
