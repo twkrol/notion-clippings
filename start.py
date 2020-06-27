@@ -20,12 +20,11 @@ import time
 import configparser
 import logging
 from notion.client import NotionClient
-# from clippings import parser
-import kindle
-import progress
+from clippings import parser
+from progress.bar import Bar
 
 appname = "Notion Clippings"
-version = "1.0.2"
+version = "1.1.0"
 
 #Configuration load
 config = configparser.ConfigParser()
@@ -52,7 +51,7 @@ clippings_file = config.get('kindle', 'clippings_file')
 print(f"- loading clippings from {clippings_file}...", end='')
 try:
     with open(clippings_file, 'r', encoding='utf-8-sig') as infile:
-        clips = kindle.parse_clippings(infile)
+        clips = parser.parse_clippings(infile)
         print(f"[{len(clips)} loaded]")
 except FileNotFoundError:
     print(f"File {clippings_file} not found! Exiting.")
@@ -110,27 +109,28 @@ def clipExists(clips, row):
 # clips = clips[:90]
 
 #Iterate Notion collection (rows)
-print(f"Comparing items")
-for i, row in enumerate(collection_view.collection.get_rows()):
-    log.debug(f"  row: {row.Status} / {row.Title} / {row.Authors} / {row.Date.start if row.Date else ''} / {row.Location}")
-    atPosition = clipExists(clips, row)
-    if atPosition > -1:
-        del clips[atPosition]
-    progress.progress(i+1, collectionSize, status=' comparing items' if i < collectionSize-1 else ' done.         \n')
+with Bar('- comparing items', max=collectionSize, suffix='%(percent).1f%% - %(eta)ds left') as bar:
+    for i, row in enumerate(collection_view.collection.get_rows()):
+        log.debug(f"  row: {row.Status} / {row.Title} / {row.Authors} / {row.Date.start if row.Date else ''} / {row.Location}")
+        atPosition = clipExists(clips, row)
+        if atPosition > -1:
+            del clips[atPosition]
+        bar.next()
 
 #Inform what we have found
 if len(clips) > 0:
-    print(f"Adding {len(clips)} new item(s) to table {page.title}")
+    # print(f"Adding {len(clips)} new item(s) to table {page.title}")
     new_status = config.get('notion', 'new_status')
-    for i, clip in enumerate(clips):
-        row = collection_view.collection.add_row()
-        row.Status = new_status
-        row.Title = clip.document.title
-        row.Authors = clip.document.authors
-        row.Date = clip.metadata.timestamp
-        row.Text = clip.content
-        row.Location = str(clip.metadata.location)
-        progress.progress(i+1, len(clips), status=' adding items' if i < len(clips)-1 else ' done.       \n')
+    with Bar(f'- adding {len(clips)} items ', max=len(clips), suffix='%(percent).1f%% - %(eta)ds left') as bar:
+        for i, clip in enumerate(clips):
+            row = collection_view.collection.add_row()
+            row.Status = new_status
+            row.Title = clip.document.title
+            row.Authors = clip.document.authors
+            row.Date = clip.metadata.timestamp
+            row.Text = clip.content
+            row.Location = str(clip.metadata.location)
+            bar.next()
 else:
     print(f"No new items found")
 
